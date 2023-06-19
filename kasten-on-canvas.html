@@ -19,6 +19,42 @@
         }
     </style>
 
+    <script>
+        'use strict';
+
+        // KONSTANTEN / VARIABLEN
+        // elements contains DOM-Elements that are used in this script
+        const elements = {};
+
+        // Functions
+        const domMapping = () => {
+            elements.myCanvas = document.getElementById('myCanvas');
+        }
+
+        const render = () => {
+            const c = elements.myCanvas;
+            // Der Context ist der Befehlssatz, der je nach Einsatzzweck Methoden zur Verfügung stellt
+            const ctx = c.getContext('2d');
+
+            // Schritt 1: Anfang des Pfades definieren
+            ctx.beginPath();
+
+            // Schritt 2: Definition der Punkte
+            ctx.rect(20, 20, 100, 100);
+
+            // Schritt 3: Zeichnen
+            // ctx.stroke();
+            ctx.fill();
+        }
+
+        const init = () => {
+            domMapping();
+            render();
+        }
+
+        // Call init
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
 </head>
 
 <!--
@@ -33,10 +69,7 @@ Der Kasten soll mit einem Blaugrau gefüllt sein.
 
 <body>
     <h1>Farbiger Kasten auf Canvas</h1>
-    <canvas id="canvas" width="500" height="500"></canvas>
-    <script>
-
-    </script>
+    <canvas id="myCanvas" width="500" height="500"></canvas>
 </body>
 
 </html>
