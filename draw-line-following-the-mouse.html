@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        integrity="sha384-..." crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Farbiger Kasten auf Canvas</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        canvas {
+            position: relative;
+            display: block;
+            border: 1px solid orange;
+            background-color: beige;
+            margin: 0 auto;
+        }
+    </style>
+
+    <script>
+        'use strict';
+
+        // KONSTANTEN / VARIABLEN
+        // elements contains DOM-Elements that are used in this script
+        const elements = {};
+
+        // Functions
+        const domMapping = () => {
+            elements.c = document.getElementById('myCanvas');
+            // Der Context ist der Befehlssatz, der je nach Einsatzzweck Methoden zur Verfügung stellt
+            elements.ctx = elements.c.getContext('2d');
+        }
+
+        const render = () => {
+            const ctx = elements.ctx;
+            const c = elements.c;
+            ctx.clearRect(0, 0, c.width, c.height);
+            ctx.fillStyle = 'rgba(70, 110, 180, 0.75)';
+
+            // Write squares and with border
+            for (let i = 0; i < 1000; i++) {
+                let x = Math.random() * c.width;
+                let y = Math.random() * c.height;
+                ctx.fillRect(x, y, 10, 10);
+                ctx.strokeRect(x, y, 10, 10);
+            }
+        }
+
+        const prepareCanvas = () => {
+            // Set canvas size  
+            const useScreenSize = true;
+            if (useScreenSize) {
+                const screenWidth = window.screen.width;
+                const screenHeight = window.screen.height;
+                console.log('screenWidth', screenWidth);
+                console.log('screenHeight', screenHeight);
+
+                const relationCanvasToScreen = 0.5;
+                elements.c.width = screenWidth * relationCanvasToScreen;
+                elements.c.height = screenHeight * relationCanvasToScreen;
+            } else {
+                elements.c.width = 500;
+                elements.c.height = 500;
+            }
+            console.log('elements.c.width', elements.c.width);
+            console.log('elements.c.height', elements.c.height);
+        }
+
+        const init = () => {
+            domMapping();
+            prepareCanvas();
+            render();
+            setInterval(
+                render,
+                1000 // call every second
+            )
+        }
+
+        // Call init
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8">
+                <h1>Draw a line following mouse on hover.</h1>
+                <p>Create a canvas. When the mouse moves over the canvas, draw a line following the mouse.</p>
+                <canvas id="myCanvas"></canvas>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
