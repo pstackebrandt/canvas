@@ -39,6 +39,7 @@
         const render = () => {
             const ctx = elements.ctx;
             const c = elements.c;
+            ctx.clearRect(0, 0, c.width, c.height);
             ctx.fillStyle = 'rgba(70, 110, 180, 0.75)';
 
             // Write squares and with border
