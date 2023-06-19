@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Farbiger Kasten auf Canvas</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        canvas {
+            position: relative;
+            display: block;
+            border: 1px solid orange;
+            background-color: beige;
+        }
+    </style>
+
+    <script>
+        'use strict';
+
+        // KONSTANTEN / VARIABLEN
+        // elements contains DOM-Elements that are used in this script
+        const elements = {};
+
+        // Functions
+        const domMapping = () => {
+            elements.myCanvas = document.getElementById('myCanvas');
+        }
+
+        const render = () => {
+            const c = elements.myCanvas;
+            // Der Context ist der Befehlssatz, der je nach Einsatzzweck Methoden zur Verfügung stellt
+            const ctx = c.getContext('2d');
+
+            ctx.fillStyle = 'rgba(70, 110, 180, 0.75)';
+
+            // Step 1: Define the start of the path
+            ctx.beginPath();
+
+            // Step 2: Definition boxes
+            for (let i = 0; i < 100; i++) {
+                let x = Math.random() * 500;
+                let y = Math.random() * 500;
+                ctx.rect(x, y, 10, 10);
+            }
+
+            // Step 3: Drawing
+            ctx.fill();
+        }
+
+        const init = () => {
+            domMapping();
+            render();
+        }
+
+        // Call init
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</head>
+
+<!--
+Verteile auf dem Canvas 100 quadratische Kästen mit zufälliger Positionierung.
+-->
+
+<body>
+    <h1>Farbiger Kasten auf Canvas</h1>
+    <canvas id="myCanvas" width="500" height="500"></canvas>
+</body>
+
+</html>
