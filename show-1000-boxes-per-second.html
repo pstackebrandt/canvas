@@ -38,18 +38,13 @@
 
             ctx.fillStyle = 'rgba(70, 110, 180, 0.75)';
 
-            // Step 1: Define the start of the path
-            ctx.beginPath();
-
-            // Step 2: Definition boxes
+            // Write squares and with border
             for (let i = 0; i < 1000; i++) {
                 let x = Math.random() * 500;
                 let y = Math.random() * 500;
-                ctx.rect(x, y, 10, 10);
+                ctx.fillRect(x, y, 10, 10);
+                ctx.strokeRect(x, y, 10, 10);
             }
-
-            // Step 3: Drawing
-            ctx.fill();
         }
 
         const init = () => {
