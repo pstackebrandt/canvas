@@ -8,7 +8,7 @@ Original: alfaview
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Titel</title>
+    <title>100 squares with gradients on canvas</title>
     <style>
         html,
         body {
@@ -44,6 +44,8 @@ Original: alfaview
             elements.c.width = 800;
             elements.c.height = 600;
         }
+
+        // Verlauf definieren
         const createGradient = (ctx, pkt1, pkt2) => {
             // Verlauf definieren
             // Start- und Endkoordinaten
@@ -52,9 +54,9 @@ Original: alfaview
                 pkt2[0], pkt2[1]
             );
             // Farben
-            myGradient.addColorStop(0, '#abc');
-            myGradient.addColorStop(.7, '#89a');
-            myGradient.addColorStop(1, '#567');
+            myGradient.addColorStop(0, 'blue');
+            myGradient.addColorStop(.7, 'white');
+            myGradient.addColorStop(1, 'brown');
 
             return myGradient;
         }
