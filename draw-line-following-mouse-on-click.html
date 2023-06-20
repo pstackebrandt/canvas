@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="de">
+<!--
+    When the mouse moves over the canvas and the mouse button is pressed,
+    a line should be drawn following the mouse.
+    The page should have an input field for the line color.
+    Additionally, an input field should determine the line thickness.
+
+    todo: 
+    - react on mouse down
+    - add input fields for line color
+    - use line color
+    - add input field for line thickness
+    - use line thickness
+ -->
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Line following mouse</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        canvas {
+            position: relative;
+            display: block;
+            border: 1px solid orange;
+            background-color: beige;
+            margin: 0 auto;
+        }
+    </style>
+
+    <script>
+        'use strict';
+
+        // Constants / Variables
+        // elements contains DOM-Elements that are used in this script
+        const elements = {};
+        const points = [];
+
+        // Functions
+        const domMapping = () => {
+            elements.c = document.getElementById('myCanvas');
+            // Der Context ist der Befehlssatz, der je nach Einsatzzweck Methoden zur Verfügung stellt
+            elements.ctx = elements.c.getContext('2d');
+        }
+
+        const addPoint = evt => {
+            // Mausposition
+            let x = evt.layerX;
+            let y = evt.layerY;
+
+            points.push({ x, y });
+            // console.log(points);
+            render();
+        }
+
+        const appendEventlisteners = () => {
+            elements.c.addEventListener('mousemove', addPoint);
+        }
+
+        const render = () => {
+            const ctx = elements.c.getContext('2d');
+            ctx.clearRect(0, 0, elements.c.width, elements.c.height);
+
+            ctx.strokeStyle = 'hsla(0,100%,50%,.5)';
+            ctx.lineWidth = 20;
+
+            ctx.beginPath();
+
+            for (let point of points) {
+                ctx.lineTo(point.x, point.y);
+            }
+
+            ctx.stroke();
+        }
+
+        const prepareCanvas = () => {
+            // Set canvas size  
+            const useScreenSize = true;
+            if (useScreenSize) {
+                const screenWidth = window.screen.width;
+                const screenHeight = window.screen.height;
+                console.log('screenWidth', screenWidth);
+                console.log('screenHeight', screenHeight);
+
+                const relationCanvasToScreen = 0.5;
+                elements.c.width = screenWidth * relationCanvasToScreen;
+                elements.c.height = screenHeight * relationCanvasToScreen;
+            } else {
+                elements.c.width = 800;
+                elements.c.height = 600;
+            }
+            console.log('elements.c.width', elements.c.width);
+            console.log('elements.c.height', elements.c.height);
+        }
+
+        const init = () => {
+            domMapping();
+            appendEventlisteners();
+            prepareCanvas();
+            render()
+        }
+
+        // Call init
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8">
+                <h1>Draw a line following mouse on hover</h1>
+                <p>Create a canvas. When the mouse moves over the canvas, draw a line following the mouse.</p>
+                <canvas id="myCanvas"></canvas>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
