@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="de">
+<!-- Path: canvas_0_0_c_verlauf.html 
+Original: alfaview
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Titel</title>
+    <style>
+        html,
+        body {
+            position: relative;
+            padding: 0;
+            margin: 0;
+            background-color: #eee;
+        }
+
+        canvas {
+            position: relative;
+            display: block;
+            background: #fff;
+            border: 2px solid #aaa;
+        }
+    </style>
+
+    <script>
+        'use strict';
+
+        // KONSTANTEN / VARIABLEN
+        const elements = {};
+
+        // FUNKTIONEN
+        const domMapping = () => {
+            elements.c = document.querySelector('#myCanvas');
+            elements.ctx = elements.c.getContext('2d');
+        }
+
+        const appendEventlisteners = () => { }
+
+        const initCanvas = () => {
+            elements.c.width = 800;
+            elements.c.height = 600;
+        }
+        const createGradient = (ctx, pkt1, pkt2) => {
+            // Verlauf definieren
+            // Start- und Endkoordinaten
+            let myGradient = elements.ctx.createLinearGradient(
+                pkt1[0], pkt1[1],
+                pkt2[0], pkt2[1]
+            );
+            // Farben
+            myGradient.addColorStop(0, '#abc');
+            myGradient.addColorStop(.7, '#89a');
+            myGradient.addColorStop(1, '#567');
+
+            return myGradient;
+        }
+
+        const render = () => {
+            let c = elements.c;
+            let ctx = elements.ctx;
+
+            for (let i = 0; i < 100; i++) {
+                let links = Math.random() * c.width;
+                let oben = Math.random() * c.height;
+                let breite = Math.random() * 100 + 20;
+                let hoehe = Math.random() * 100 + 20;
+
+                ctx.fillStyle = createGradient(ctx, [links, oben], [links, oben + hoehe]);
+
+                ctx.fillRect(links, oben, breite, hoehe)
+                ctx.strokeRect(links, oben, breite, hoehe)
+            }
+        }
+
+        const init = () => {
+            domMapping();
+            appendEventlisteners();
+            initCanvas();
+            render()
+        }
+
+        // INIT
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</head>
+
+<body>
+    <canvas id="myCanvas"></canvas>
+</body>
+
+</html>
