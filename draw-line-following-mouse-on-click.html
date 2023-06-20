@@ -13,6 +13,7 @@
     - add input field for line thickness
     - use line thickness
  -->
+
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -41,6 +42,7 @@
         // elements contains DOM-Elements that are used in this script
         const elements = {};
         const points = [];
+        let mouseDown = false; // Variable für den Status der Maus
 
         // Functions
         const domMapping = () => {
@@ -50,6 +52,8 @@
         }
 
         const addPoint = evt => {
+            if (!mouseDown) return; // Wenn die Maus nicht gedrückt ist, wird die Funktion abgebrochen
+            
             // Mausposition
             let x = evt.layerX;
             let y = evt.layerY;
@@ -58,6 +62,20 @@
             // console.log(points);
             render();
         }
+
+        document.addEventListener('mousedown', function (event) {
+            if (event.button == 0) {
+                mouseDown = true;
+                console.log('mouseDown', mouseDown);
+            }
+        });
+
+        document.addEventListener('mouseup', function (event) {
+            if (event.button == 0) {
+                mouseDown = false;
+                console.log('mouseDown', mouseDown);
+            }
+        });
 
         const appendEventlisteners = () => {
             elements.c.addEventListener('mousemove', addPoint);
