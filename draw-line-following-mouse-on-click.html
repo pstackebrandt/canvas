@@ -52,28 +52,33 @@
         }
 
         const addPoint = evt => {
-            if (!mouseDown) return; // Wenn die Maus nicht gedrückt ist, wird die Funktion abgebrochen
+            if (!mouseDown) {
+                console.log('addPoint: , do nothing because Mouse not pressed: mouseDown: ', mouseDown);
+                return;
+            } // Wenn die Maus nicht gedrückt ist, wird die Funktion abgebrochen
             
             // Mausposition
             let x = evt.layerX;
             let y = evt.layerY;
 
             points.push({ x, y });
-            // console.log(points);
+            console.log(`addPoint: add to points: point (x: ${x} y: ${y})`);
             render();
         }
 
         document.addEventListener('mousedown', function (event) {
-            if (event.button == 0) {
+
+            if (event.button === 0) {
+                // Mouse button is pressed
                 mouseDown = true;
-                console.log('mouseDown', mouseDown);
+                console.log('Mouse button pressed: mouseDown', mouseDown);
             }
         });
 
         document.addEventListener('mouseup', function (event) {
-            if (event.button == 0) {
+            if (event.button === 0) {
                 mouseDown = false;
-                console.log('mouseDown', mouseDown);
+                console.log('Mouse button released: mouseUp', mouseDown);
             }
         });
 
@@ -90,8 +95,19 @@
 
             ctx.beginPath();
 
+            // Problem: points speichert Punkte und keine Information darüber,
+            // ob zwischen ihnen eine Verbindung gezeichnet werden soll.
+            // Wenn keine Verbindung gezeichnet werden soll, muss diese Information im point
+            // gespeichert sein.
+            // Add point muss die Info speichern.
+            // Wir speichern einen boolschen Wert: true -> Connect, false -> don't connect
+            // Render muss sie verwenden.
+            // Wenn Add point bei mousedown aufgerufen wird, wird die Info benötigt, dass vorher kein
+            // mousedown vorlag. Dazu nutzen wir eine Variable wasMouseUp. Diese wird in mouseUp
+            // auf true gesetzt. In Add point wird sie auf false gesetzt.
+
             for (let point of points) {
-                ctx.lineTo(point.x, point.y);
+                ctx.lineTo(point.x, point.y); // Linie zeichnen
             }
 
             ctx.stroke();
